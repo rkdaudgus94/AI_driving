@@ -3,11 +3,11 @@
 import RPi.GPIO as IO
 import time
 
-pwmPin = 4
-AIN1 = 17
-AIN2 = 27
-encPinA = 22
-encPinB = 18
+pwmPin = 13
+AIN1 = 5
+AIN2 = 6
+encPinA = 23
+encPinB = 24
 
 IO.setmode(IO.BCM)
 IO.setwarnings(False)
