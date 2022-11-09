@@ -5,11 +5,13 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
-AIN1=13
-AIN2=15
-PWMA=12
+AIN1= 5
+AIN2= 6 
+PWMA= 13
+
+
 
 # 듀티 비를 변화시킬 스텝 정의 
 c_step = 10   
