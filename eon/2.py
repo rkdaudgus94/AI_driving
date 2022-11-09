@@ -3,9 +3,9 @@
 import RPi.GPIO as IO
 import time
 
-pwmPin = 14
-AIN1 = 15
-AIN2 = 18
+pwmPin = 18
+AIN1 = 14
+AIN2 = 15
 encPinA = 23
 encPinB = 24
 
