@@ -40,7 +40,7 @@ IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 while True:
-    IO.output(AIN1, IO.HIGH)
+    IO.output(AIN1, IO.LOW)
     IO.output(AIN2, IO.LOW)
     p.ChangeDutyCycle(100)
 
