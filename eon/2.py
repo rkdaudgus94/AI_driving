@@ -6,8 +6,8 @@ import time
 pwmPin = 14
 AIN1 = 15
 AIN2 = 18
-encPinA = 23
-encPinB = 24
+encPinA = 2
+encPinB = 3
 
 IO.setmode(IO.BCM)
 IO.setwarnings(False)
