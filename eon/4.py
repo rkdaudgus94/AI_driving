@@ -41,11 +41,11 @@ IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 # PID 제어
-ratio = 360./90./52. # 한 바퀴에 약 4100펄스
+ratio = 360./90./41. # 한 바퀴에 약 4100펄스
 
 setha = 0
 
-kp = 80.
+kp = 1000.
 kd = 0.
 ki = 0.
 dt = 0.
@@ -111,7 +111,7 @@ try:
         print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('%f, %f' %(de, dt))
     
-        time.sleep(0.5)
+        time.sleep(dt_sleep)
 
         
 
