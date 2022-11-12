@@ -77,5 +77,5 @@ while True:
         p.ChangeDutyCycle(15)
         break
     
-    # time.sleep(0.5)
-    time.sleep(dt_sleep)
+    time.sleep(0.5)
+    # time.sleep(dt_sleep)
