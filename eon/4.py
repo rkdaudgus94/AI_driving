@@ -41,7 +41,7 @@ IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 # PID 제어
-ratio = 360./90./41. # 한 바퀴에 약 4100펄스
+ratio = 360./90./43. # 한 바퀴에 약 4100펄스
 
 setha = 0
 
@@ -63,18 +63,7 @@ try:
 
         error_prev = error
         
-        #RESET
-        if (setha == 00) :
-            IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.LOW)
-            p.ChangeDutyCycle(0)
-
-            encoderPos = 0
-            setha = 0
-            motorDeg = 0
-            error = 0
-
-        print('RESET')
+        
 
         if(setha < 0) :
             IO.output(AIN1, IO.HIGH)
@@ -98,6 +87,19 @@ try:
                 p.ChangeDutyCycle(0)
 
             p.ChangeDutyCycle(min(abs(control), 100))
+
+        #RESET
+        elif (setha == 00) :
+            IO.output(AIN1, IO.LOW)
+            IO.output(AIN2, IO.LOW)
+            p.ChangeDutyCycle(0)
+
+            encoderPos = 0
+            setha = 0
+            motorDeg = 0
+            error = 0
+
+            print('RESET')
 
         print('setha = %d' %(setha))
         print('P-term = %7.1f' %(kp*error))
