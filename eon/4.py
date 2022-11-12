@@ -45,7 +45,7 @@ ratio = 360./90./41. # 한 바퀴에 약 4100펄스
 
 setha = 0
 
-kp = 30.
+kp = 50.
 kd = 0.
 ki = 0.
 dt = 0.
@@ -56,56 +56,63 @@ start_time = time.time()
 error_prev = 0.
 time_prev = 0.
 
+try:
+    while True:
+        setha = int(input('각도를 입력하시오 : '))
 
-while True:
-    setha = int(input('각도를 입력하시오 : '))
-
-    motorDeg = encoderPos * ratio
-    error = setha - motorDeg
+        motorDeg = encoderPos * ratio
+        error = setha - motorDeg
     
-    de = error - error_prev
-    dt = time.time() - time_prev
-    control = (kp*error) + (kd*de/dt) + (ki*error*dt)
+        de = error - error_prev
+        dt = time.time() - time_prev
+        control = (kp*error) + (kd*de/dt) + (ki*error*dt)
 
-    error_prev = error
-    time_prev = time.time()
+        error_prev = error
+        time_prev = time.time()
 
-    if(setha < 0) :
-        IO.output(AIN1, IO.HIGH)
-        IO.output(AIN2, IO.LOW)
+        if(setha < 0) :
+            IO.output(AIN1, IO.HIGH)
+            IO.output(AIN2, IO.LOW)
 
-        if ((setha >= motorDeg) & (control >= 0)) :
+            if ((setha >= motorDeg) & (control >= 0)) :
+                IO.output(AIN1, IO.LOW)
+                IO.output(AIN2, IO.LOW)
+                p.ChangeDutyCycle(0)
+
+            p.ChangeDutyCycle(min(abs(control), 100))
+
+
+        elif (setha > 0) :
+            IO.output(AIN1, IO.LOW)
+            IO.output(AIN2, IO.HIGH)
+
+            if((setha <= motorDeg) & (control <= 0)) :
+                IO.output(AIN1, IO.LOW)
+                IO.output(AIN2, IO.LOW)
+                p.ChangeDutyCycle(0)
+
+            p.ChangeDutyCycle(min(abs(control), 100))
+
+        elif (setha == 0) :
             IO.output(AIN1, IO.LOW)
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
 
-        p.ChangeDutyCycle(min(abs(control), 100))
+            encoderPos = 0
+            setha = 0
+            motorDeg = 0
+            error = 0
 
-
-    elif (setha > 0) :
-        IO.output(AIN1, IO.LOW)
-        IO.output(AIN2, IO.HIGH)
-
-        if((setha <= motorDeg) & (control <= 0)) :
-            IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.LOW)
-            p.ChangeDutyCycle(0)
-
-        p.ChangeDutyCycle(min(abs(control), 100))
-
-    elif (setha == 0) :
-        IO.output(AIN1, IO.LOW)
-        IO.output(AIN2, IO.LOW)
-        p.ChangeDutyCycle(0)
-
-        encoderPos = 0
-        setha = 0
-        motorDeg = 0
-        error = 0
-
-    print('setha = %d' %(setha))
-    print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
-    print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
-    print('%f, %f' %(de, dt))
+        print('setha = %d' %(setha))
+        print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
+        print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
+        print('%f, %f' %(de, dt))
     
-    time.sleep(0.5)
+        time.sleep(0.5)
+
+except KeyboardInterrupt: 
+    pass 
+
+p.stop() 
+
+IO.cleanup()
