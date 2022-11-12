@@ -6,8 +6,8 @@ import time
 pwmPin = 14
 AIN1 = 15
 AIN2 = 18
-encPinA = 2 # 파란색 (B)
-encPinB = 3 # 보라색 (A)
+encPinA = 2 # 보라색 (A)
+encPinB = 3 # 파랑색 (B)
 
 IO.setmode(IO.BCM)
 IO.setwarnings(False)
@@ -108,10 +108,10 @@ try:
 
         print('setha = %d' %(setha))
         print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
-        print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
+        print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('%f, %f' %(de, dt))
     
-        time.sleep(0.5)
+        time.sleep(0.01)
 
         
 
