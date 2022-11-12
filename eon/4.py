@@ -57,9 +57,9 @@ error_prev = 0.
 time_prev = 0.
 
 try:
-    while True:
-        setha = int(input('각도를 입력하시오 : '))
+    setha = int(input('각도를 입력하시오 : '))
 
+    while True:
         motorDeg = encoderPos * ratio
         error = setha - motorDeg
     
@@ -69,6 +69,19 @@ try:
 
         error_prev = error
         time_prev = time.time()
+        
+        #RESET
+        if (setha == 00) :
+            IO.output(AIN1, IO.LOW)
+            IO.output(AIN2, IO.LOW)
+            p.ChangeDutyCycle(0)
+
+            encoderPos = 0
+            setha = 0
+            motorDeg = 0
+            error = 0
+
+        print('RESET')
 
         if(setha < 0) :
             IO.output(AIN1, IO.HIGH)
@@ -93,22 +106,14 @@ try:
 
             p.ChangeDutyCycle(min(abs(control), 100))
 
-        elif (setha == 0) :
-            IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.LOW)
-            p.ChangeDutyCycle(0)
-
-            encoderPos = 0
-            setha = 0
-            motorDeg = 0
-            error = 0
-
         print('setha = %d' %(setha))
         print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
         print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
         print('%f, %f' %(de, dt))
     
         time.sleep(0.5)
+
+        
 
 except KeyboardInterrupt: 
     pass 
