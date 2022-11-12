@@ -5,7 +5,7 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO.BCM)
+GPIO.setmode(GPIO.BOARD)
 
 AIN1= 5
 AIN2= 6 
