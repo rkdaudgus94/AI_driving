@@ -39,7 +39,7 @@ IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 targetDeg = 360.
 ratio = 360./90./41.
-kp = 10.
+kp = 30.
 kd = 0.
 ki = 0.
 dt = 0.
@@ -69,10 +69,5 @@ while True:
     print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
     print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
     print('%f, %f' %(de, dt))
-    
-    if abs(error) <= tolerance :
-        IO.ouput(AIN1, control >= 0)
-        p.ChangeDutyCycle(0)
-        break
     
     time.sleep(0.5)
