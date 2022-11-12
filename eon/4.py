@@ -72,11 +72,9 @@ try:
 
         if(setha < 0) :
             IO.output(AIN1, IO.HIGH)
-            IO.output(AIN2, IO.LOW)
 
             if ((setha >= motorDeg) & (control >= 0)) :
                 IO.output(AIN1, IO.LOW)
-                IO.output(AIN2, IO.LOW)
                 p.ChangeDutyCycle(0)
 
             p.ChangeDutyCycle(min(abs(control), 100))
@@ -84,18 +82,15 @@ try:
 
         elif (setha > 0) :
             IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.HIGH)
 
             if((setha <= motorDeg) & (control <= 0)) :
                 IO.output(AIN1, IO.LOW)
-                IO.output(AIN2, IO.LOW)
                 p.ChangeDutyCycle(0)
 
             p.ChangeDutyCycle(min(abs(control), 100))
 
         elif (setha == 0) :
             IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
 
             encoderPos = 0
