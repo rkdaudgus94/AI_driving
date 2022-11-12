@@ -1,4 +1,4 @@
-# 360도 회전
+# 360도 회전하기 
 
 import RPi.GPIO as IO
 import time
@@ -74,8 +74,9 @@ while True:
     
     if abs(error) <= tolerance :
         IO.ouput(AIN1, control >= 0)
-        p.ChangeDutyCycle(15)
+        #p.ChangeDutyCycle(0)
+        p.ChangeDutyCycle(min(abs(control), 100))
         break
     
-    time.sleep(0.5)
-    # time.sleep(dt_sleep)
+    # time.sleep(0.5)
+    time.sleep(dt_sleep)
