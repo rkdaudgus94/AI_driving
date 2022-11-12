@@ -3,11 +3,11 @@ import time
 
 IO.setmode(IO.BCM)
 
-pwmPin = 4
-AIN1 = 17
-AIN2 = 27
-encPinA = 22
-encPinB = 18
+pwmPin = 14
+AIN1 = 15
+AIN2 = 18
+encPinA = 2
+encPinB = 3
 
 IO.setwarnings(False)
 IO.setup(encPinA, IO.IN, pull_up_down=IO.PUD_UP)
@@ -16,19 +16,19 @@ IO.setup(pwmPin,IO.OUT, initial=IO.LOW)
 IO.setup(AIN1,IO.OUT, initial=IO.LOW)
 IO.setup(AIN2,IO.OUT, initial=IO.LOW)
 
-p = IO.PWM(4, 100)
+p = IO.PWM(14, 100)
 p.start(0)
 
 encoderPos = 0
 
-def encoderA(channel):
+def encoderA(encPinA):
     global encoderPos
     if IO.input(encPinA) == IO.input(encPinB):
         encoderPos += 1
     else:
         encoderPos -= 1
    
-def encoderB(channel):
+def encoderB(encPinB):
     global encoderPos
     if IO.input(encPinA) == IO.input(encPinB):
         encoderPos -= 1
@@ -39,7 +39,7 @@ IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 targetDeg= 360.
-ratio = 360./30./168. #168 OR 206
+ratio = 360./30./41. #168 OR 206
 Kp = 1.
 Kd = 0.025
 Ki = 0.
