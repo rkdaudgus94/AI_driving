@@ -75,7 +75,7 @@ while True:
     if abs(error) <= tolerance :
         IO.ouput(AIN1, control >= 0)
         IO.ouput(AIN2, control >= 0)
-        p.ChangeDutyCycle(0)
+        p.ChangeDutyCycle(100)
         break
     
     # time.sleep(0.5)
