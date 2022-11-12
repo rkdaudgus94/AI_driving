@@ -58,7 +58,7 @@ time_prev = 0.
 
 try:
     while True:
-        setha = (input('각도를 입력하시오 : '))
+        setha = int(input('각도를 입력하시오 : '))
 
         motorDeg = encoderPos * ratio
         error = setha - motorDeg
@@ -101,7 +101,7 @@ try:
         time.sleep(0.5)
 
         #RESET
-        if (setha == 'RESET') :
+        if (str(setha) == 'RESET') :
             IO.output(AIN1, IO.LOW)
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
