@@ -57,9 +57,9 @@ error_prev = 0.
 time_prev = 0.
 
 try:
-    while True:
-        setha = int(input('각도를 입력하시오 : '))
+    setha = int(input('각도를 입력하시오 : '))
 
+    while True:
         motorDeg = encoderPos * ratio
         error = setha - motorDeg
     
