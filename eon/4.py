@@ -46,9 +46,9 @@ ratio = 360./90./41. # 한 바퀴에 약 4100펄스
 setha = 0
 
 kp = 30.
-kd = 1.
-ki = 1.
-dt = 1.
+kd = 0.
+ki = 0.
+dt = 0.
 dt_sleep = 0.01
 tolerance = 0.01
 
