@@ -4,8 +4,8 @@ import time
 pwmPin = 14
 AIN1 = 15
 AIN2 = 18
-encPinA = 2
-encPinB = 3
+encPinA = 2 # 파란색 (B)
+encPinB = 3 # 보라색 (A)
 
 IO.setmode(IO.BCM)
 IO.setwarnings(False)
@@ -20,6 +20,7 @@ p.start(0)
 
 encoderPos = 0
 
+# 엔코더 인터럽트 제어 함수
 def encoderA(encPinA):
     global encoderPos
     if IO.input(encPinA) == IO.input(encPinB):
@@ -37,12 +38,15 @@ def encoderB(encPinB):
 IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
-targetDeg = 360.
-ratio = 360./90./41.
+# PID 제어
+ratio = 360./90./41. # 한 바퀴에 약 4100펄스
+
+setha = 0
+
 kp = 30.
-kd = 0.
-ki = 0.
-dt = 0.
+kd = 1.
+ki = 1.
+dt = 1.
 dt_sleep = 0.01
 tolerance = 0.01
 
@@ -52,9 +56,11 @@ time_prev = 0.
 
 
 while True:
-    motorDeg = encoderPos * ratio
+    setha = int(input('각도를 입력하시오 : '))
 
-    error = targetDeg - motorDeg
+    motorDeg = encoderPos * ratio
+    error = setha - motorDeg
+    
     de = error - error_prev
     dt = time.time() - time_prev
     control = (kp*error) + (kd*de/dt) + (ki*error*dt)
@@ -62,10 +68,40 @@ while True:
     error_prev = error
     time_prev = time.time()
 
-    IO.output(AIN1, control >= 0)
-    # IO.output(AIN2, IO.LOW)
-    p.ChangeDutyCycle(min(abs(control), 100))
+    if(setha < 0) :
+        IO.output(AIN1, IO.HIGH)
+        IO.output(AIN2, IO.LOW)
 
+        if ((setha >= motorDeg) & (control >= 0)) :
+            IO.output(AIN1, IO.LOW)
+            IO.output(AIN2, IO.LOW)
+            p.ChangeDutyCycle(0)
+
+        p.ChangeDutyCycle(min(abs(control), 255))
+
+
+    elif (setha > 0) :
+        IO.output(AIN1, IO.LOW)
+        IO.output(AIN2, IO.HIGH)
+
+        if((setha <= motorDeg) & (contro <= 0)) :
+            IO.output(AIN1, IO.LOW)
+            IO.output(AIN2, IO.LOW)
+            p.ChangeDutyCycle(0)
+
+        p.ChangeDutyCycle(min(abs(control), 255))
+
+    elif (setha == 0) :
+        IO.output(AIN1, IO.LOW)
+        IO.output(AIN2, IO.LOW)
+        p.ChangeDutyCycle(0)
+
+        encoderPos = 0
+        setha = 0
+        motorDeg = 0
+        error = 0
+
+    print('setha = %d' %(setha))
     print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
     print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
     print('%f, %f' %(de, dt))
