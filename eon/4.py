@@ -66,7 +66,7 @@ while True:
     # IO.output(AIN2, IO.LOW)
     p.ChangeDutyCycle(min(abs(control), 100))
 
-    print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(Kp*error, Kd*de/dt, Ki*de*dt))
+    print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
     print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
     print('%f, %f' %(de, dt))
     
