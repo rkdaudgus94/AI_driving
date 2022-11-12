@@ -84,7 +84,7 @@ while True:
         IO.output(AIN1, IO.LOW)
         IO.output(AIN2, IO.HIGH)
 
-        if((setha <= motorDeg) & (contro <= 0)) :
+        if((setha <= motorDeg) & (control <= 0)) :
             IO.output(AIN1, IO.LOW)
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
