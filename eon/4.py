@@ -69,6 +69,19 @@ try:
 
         error_prev = error
         time_prev = time.time()
+        
+        #RESET
+        if (setha == 00) :
+            IO.output(AIN1, IO.LOW)
+            IO.output(AIN2, IO.LOW)
+            p.ChangeDutyCycle(0)
+
+            encoderPos = 0
+            setha = 0
+            motorDeg = 0
+            error = 0
+
+        print('RESET')
 
         if(setha < 0) :
             IO.output(AIN1, IO.HIGH)
@@ -100,18 +113,7 @@ try:
     
         time.sleep(0.5)
 
-        #RESET
-        if (str(setha) == 'RESET') :
-            IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.LOW)
-            p.ChangeDutyCycle(0)
-
-            encoderPos = 0
-            setha = 0
-            motorDeg = 0
-            error = 0
-
-        print('RESET')
+        
 
 except KeyboardInterrupt: 
     pass 
