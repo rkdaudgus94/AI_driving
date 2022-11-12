@@ -46,8 +46,8 @@ ratio = 360./90./41. # 한 바퀴에 약 4100펄스
 setha = 0
 
 kp = 50.
-kd = 0.
-ki = 0.
+kd = 30.
+ki = 30.
 dt = 0.
 dt_sleep = 0.01
 tolerance = 0.01
@@ -111,7 +111,7 @@ try:
         print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('%f, %f' %(de, dt))
     
-        time.sleep(0.01)
+        time.sleep(0.5)
 
         
 
