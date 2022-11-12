@@ -1,3 +1,5 @@
+# 엔코더를 이용해 DC 모터 각도 조절
+
 import RPi.GPIO as IO
 import time
 
@@ -15,7 +17,7 @@ IO.setup(pwmPin,IO.OUT, initial=IO.LOW)
 IO.setup(AIN1,IO.OUT, initial=IO.LOW)
 IO.setup(AIN2,IO.OUT, initial=IO.LOW)
 
-p = IO.PWM(14, 255)
+p = IO.PWM(14, 100)
 p.start(0)
 
 encoderPos = 0
@@ -77,7 +79,7 @@ while True:
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
 
-        p.ChangeDutyCycle(min(abs(control), 255))
+        p.ChangeDutyCycle(min(abs(control), 100))
 
 
     elif (setha > 0) :
@@ -89,7 +91,7 @@ while True:
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
 
-        p.ChangeDutyCycle(min(abs(control), 255))
+        p.ChangeDutyCycle(min(abs(control), 100))
 
     elif (setha == 0) :
         IO.output(AIN1, IO.LOW)
