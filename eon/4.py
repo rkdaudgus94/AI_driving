@@ -101,7 +101,7 @@ try:
         time.sleep(0.5)
 
         #RESET
-        if (setha == 0) :
+        if (setha == 'RESET') :
             IO.output(AIN1, IO.LOW)
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
