@@ -39,7 +39,7 @@ IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 targetDeg= 360.
-ratio = 360./30./41. #168 OR 206
+ratio = 360./57./68. #168 OR 206
 Kp = 1000.
 Kd = 0.
 Ki = 0.
