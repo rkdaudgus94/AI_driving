@@ -63,7 +63,7 @@ while True:
     time_prev = time.time()
    
     IO.output(AIN1, control >= 0)
-    p.ChangeDutyCycle(min(abs(control), 100))
+    p.ChangeDutyCycle(min(abs(control), 15))
     
     print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(Kp*error, Kd*de/dt, Ki*de*dt))
     print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
