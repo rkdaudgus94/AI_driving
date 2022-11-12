@@ -65,7 +65,7 @@ while True:
     time_prev = time.time()
 
     IO.output(AIN1, control >= 0)
-    IO.output(AIN2, control >= 0)
+    IO.output(AIN1, control <= 0)
 
     # IO.output(AIN2, IO.LOW)
     p.ChangeDutyCycle(min(abs(control), 100))
@@ -76,7 +76,7 @@ while True:
     
     if abs(error) <= tolerance :
         IO.ouput(AIN1, control >= 0)
-        IO.ouput(AIN2, control >= 0)
+        IO.ouput(AIN2, control <= 0)
         p.ChangeDutyCycle(min(abs(control), 100))
         break
     
