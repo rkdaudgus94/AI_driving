@@ -42,12 +42,12 @@ IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 # PID 제어
-ratio = 360./90./26. # 한 바퀴에 약 4100펄스
+ratio = 360./90./50. # 한 바퀴에 약 4100펄스
 
 # P 상수
 kp = 1.
 
-dt_sleep = 0.01
+# dt_sleep = 0.01
 
 try:
     # 원하는 모터 각도 (반복 입력 가능하게 수정해야 함.)
