@@ -45,7 +45,7 @@ IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 ratio = 360./90./52. # 한 바퀴에 약 4100펄스
 
 # P 상수
-kp = 1.
+kp = 10.
 
 dt_sleep = 0.01
 
