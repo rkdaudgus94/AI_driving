@@ -105,7 +105,7 @@ try:
         print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('P-term = %7.1f' %(kp*error))
 
-        time.sleep(dt_sleep)
+        # time.sleep(dt_sleep)
 
 # Crtl + c 누르면 모터 작동 멈춤
 except KeyboardInterrupt: 
