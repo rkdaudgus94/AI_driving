@@ -13,9 +13,9 @@ IO.setmode(IO.BCM)
 IO.setwarnings(False)
 IO.setup(encPinA, IO.IN, pull_up_down=IO.PUD_UP)
 IO.setup(encPinB, IO.IN, pull_up_down=IO.PUD_UP)
-IO.setup(pwmPin,IO.OUT, initial=IO.LOW)
-IO.setup(AIN1,IO.OUT, initial=IO.LOW)
-IO.setup(AIN2,IO.OUT, initial=IO.LOW)
+IO.setup(pwmPin, IO.OUT, initial=IO.LOW)
+IO.setup(AIN1, IO.OUT, initial=IO.LOW)
+IO.setup(AIN2, IO.OUT, initial=IO.LOW)
 
 p = IO.PWM(14, 100)
 p.start(0)
@@ -42,12 +42,19 @@ IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 # PID 제어
-ratio = 360./90./52. # 한 바퀴에 약 4100펄스
+ratio = 360./90./26. # 한 바퀴에 약 4100펄스
 
-# P 상수
-kp = 20.
+# PID 상수
+kp = 1.
+kd = 0.
+ki = 0.
 
+dt = 0.
 dt_sleep = 0.01
+
+start_time =time.time()
+error_prev = 0.
+time_prev = 0.
 
 try:
     # 원하는 모터 각도 (반복 입력 가능하게 수정해야 함.)
@@ -56,9 +63,15 @@ try:
     while True:
         # motorDeg : 실제 모터 각도
         motorDeg = encoderPos * ratio
+        # error : 원하는 각도 - 실제 모터 각도
         error = setha - motorDeg
+        de = error - error_prev
+        dt = time.time() - time_prev
     
-        control = (kp*error)
+        control = (kp * error) + (kd * de/dt) + (ki * error * dt)
+
+        error_prev = error
+        time_prev = time.time()
 
         # 역방향
         if(setha < 0) :
@@ -105,7 +118,7 @@ try:
         print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('P-term = %7.1f' %(kp*error))
 
-        # time.sleep(dt_sleep)
+        time.sleep(dt_sleep)
 
 # Crtl + c 누르면 모터 작동 멈춤
 except KeyboardInterrupt: 
