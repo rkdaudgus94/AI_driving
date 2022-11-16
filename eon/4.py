@@ -42,10 +42,10 @@ IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 
 # PID 제어
-ratio = 360./90./50. # 한 바퀴에 약 4100펄스
+ratio = 360./90./52. # 한 바퀴에 약 4100펄스
 
 # P 상수
-kp = 1.
+kp = 10.
 
 dt_sleep = 0.01
 
