@@ -62,7 +62,7 @@ try:
 
     while True:
         # motorDeg : 실제 모터 각도
-        motorDeg = encoderPos * ratio
+        motorDeg = encoderPos * ratio - 20
         # error : 원하는 각도 - 실제 모터 각도
         error = setha - motorDeg
         de = error - error_prev
