@@ -81,6 +81,8 @@ try:
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
 
+            print('360')
+
         print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('P-term = %7.1f' %(kp*error))
 
