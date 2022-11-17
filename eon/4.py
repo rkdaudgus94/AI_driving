@@ -45,7 +45,7 @@ IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 ratio = 360./90./52. # 한 바퀴에 약 4100펄스
 
 # PID 상수
-kp = 10.
+kp = 10. 
 kd = 0.
 ki = 0.
 
@@ -62,7 +62,7 @@ try:
 
     while True:
         # motorDeg : 실제 모터 각도
-        motorDeg = encoderPos * ratio - 20
+        motorDeg = encoderPos * ratio
         # error : 원하는 각도 - 실제 모터 각도
         error = setha - motorDeg
         de = error - error_prev
