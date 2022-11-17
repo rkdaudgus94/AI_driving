@@ -76,7 +76,7 @@ try:
         p.ChangeDutyCycle(20)
 
         # RESET(현재 위치를 기준으로 각도를 읽어야 하므로 각도를 입력하기 전에 RESET을 해줘야 함.)
-        if (360 <= motorDeg) :
+        if (355 <= motorDeg <= 370) :
             IO.output(AIN1, IO.LOW)
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
