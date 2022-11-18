@@ -79,7 +79,7 @@ try:
             IO.output(AIN2, IO.HIGH)
 
             # seta가 모터 각도보다 크고 control이 플러스 값이 나오게 되면 모터가 멈춤
-            if ((setha >= motorDeg) & (control >= 0)) :
+            if((setha <= motorDeg) & (control <= 0)) :
                 IO.output(AIN1, IO.LOW)
                 IO.output(AIN2, IO.LOW)
                 p.ChangeDutyCycle(0)
@@ -91,12 +91,13 @@ try:
         elif (setha > 0) :
             IO.output(AIN1, IO.HIGH)
             IO.output(AIN2, IO.LOW)
-
-            # seta가 모터 각도보다 작고 control이 마이너스 값이 나오게 되면 모터가 멈춤
-            if((setha <= motorDeg) & (control <= 0)) :
+            
+            if ((setha >= motorDeg) & (control >= 0)) :
                 IO.output(AIN1, IO.LOW)
                 IO.output(AIN2, IO.LOW)
                 p.ChangeDutyCycle(0)
+            # seta가 모터 각도보다 작고 control이 마이너스 값이 나오게 되면 모터가 멈춤
+
 
             # 모터가 멈추기 전까지 control과 속도를 비교하여 최소값으로 모터 속도가 정해져서 돌아감
             p.ChangeDutyCycle(min(abs(control), 50))
