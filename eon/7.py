@@ -3,8 +3,8 @@ import time
 
 GPIO.setmode(GPIO.BCM)
 
-GPIO_RP = 2
-GPIO_RN = 3
+GPIO_RP = 15
+GPIO_RN = 18
 GPIO_EN = 14
 
 GPIO.setup(GPIO_RP, GPIO.OUT) # IN1
