@@ -45,13 +45,12 @@ IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 ratio = 360./90./52. # 한 바퀴에 약 4100펄스
 
 # PID 상수
-kp = 10.
-kd = 0.
+kp = 10. 
+kd = 4.
 ki = 0.
 
 dt = 0.
 dt_sleep = 0.01
-tolerance = 0.01
 
 start_time =time.time()
 error_prev = 0.
@@ -86,7 +85,7 @@ try:
                 p.ChangeDutyCycle(0)
 
             # 모터가 멈추기 전까지 control과 속도를 비교하여 최소값으로 모터 속도가 정해져서 돌아감
-            p.ChangeDutyCycle(min(abs(control), 100))
+            p.ChangeDutyCycle(min(abs(control), 50))
 
         # 정방향
         elif (setha > 0) :
@@ -100,7 +99,7 @@ try:
                 p.ChangeDutyCycle(0)
 
             # 모터가 멈추기 전까지 control과 속도를 비교하여 최소값으로 모터 속도가 정해져서 돌아감
-            p.ChangeDutyCycle(min(abs(control), 100))
+            p.ChangeDutyCycle(min(abs(control), 50))
 
         # RESET(현재 위치를 기준으로 각도를 읽어야 하므로 각도를 입력하기 전에 RESET을 해줘야 함.)
         elif (setha == 00) :
@@ -119,13 +118,7 @@ try:
         print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('P-term = %7.1f' %(kp*error))
 
-        if abs(error) <= tolerance:
-            IO.output(AIN1, control >= 0)
-            IO.output(AIN2, control <= 0)
-            p.ChangeDutyCycle(0)
-        break
-
-    time.sleep(dt_sleep)
+        time.sleep(dt_sleep)
 
 # Crtl + c 누르면 모터 작동 멈춤
 except KeyboardInterrupt: 
