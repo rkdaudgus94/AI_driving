@@ -83,7 +83,7 @@ try:
             p.ChangeDutyCycle(min(abs(control), 20))
 
             # seta가 모터 각도보다 크고 control이 플러스 값이 나오게 되면 모터가 멈춤
-            if ((setha >= motorDeg) & (control >= 0)) :
+            if ((setha >= motorDeg)) :
                 IO.output(AIN1, IO.LOW)
                 IO.output(AIN2, IO.LOW)
                 p.ChangeDutyCycle(0)
@@ -97,7 +97,7 @@ try:
             p.ChangeDutyCycle(min(abs(control), 20))
 
             # seta가 모터 각도보다 작고 control이 마이너스 값이 나오게 되면 모터가 멈춤
-            if((setha <= motorDeg) & (control <= 0)) :
+            if((setha <= motorDeg)) :
                 IO.output(AIN1, IO.LOW)
                 IO.output(AIN2, IO.LOW)
                 p.ChangeDutyCycle(0)
@@ -119,12 +119,7 @@ try:
         print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('P-term = %7.1f' %(kp*error))
 
-        if abs(error) <= tolerance:
-            IO.output(AIN1, control >= 0)
-            IO.output(AIN2, control <= 0)
-            p.ChangeDutyCycle(0)
-        break
-        #time.sleep(dt_sleep)
+        time.sleep(dt_sleep)
 
 # Crtl + c 누르면 모터 작동 멈춤
 except KeyboardInterrupt: 
