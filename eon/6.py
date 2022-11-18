@@ -45,7 +45,7 @@ IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 ratio = 360./90./52. # 한 바퀴에 약 4100펄스
 
 # PID 상수
-kp = 13. 
+kp = 15. 
 kd = 0.
 ki = 0.
 
