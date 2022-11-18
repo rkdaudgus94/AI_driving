@@ -55,6 +55,7 @@ dt_sleep = 0.01
 start_time =time.time()
 error_prev = 0.
 time_prev = 0.
+tolerance = 0.01
 
 try:
     # 원하는 모터 각도 (반복 입력 가능하게 수정해야 함.)
@@ -118,7 +119,12 @@ try:
         print('enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(encoderPos, motorDeg, error, control))
         print('P-term = %7.1f' %(kp*error))
 
-        time.sleep(dt_sleep)
+        if abs(error) <= tolerance:
+            IO.output(AIN1, control >= 0)
+            IO.output(AIN2, control >= 0)
+            p.ChangeDutyCycle(0)
+        break
+        #time.sleep(dt_sleep)
 
 # Crtl + c 누르면 모터 작동 멈춤
 except KeyboardInterrupt: 
