@@ -121,7 +121,7 @@ try:
 
         if abs(error) <= tolerance:
             IO.output(AIN1, control >= 0)
-            IO.output(AIN2, control >= 0)
+            IO.output(AIN2, control <= 0)
             p.ChangeDutyCycle(0)
         break
         #time.sleep(dt_sleep)
