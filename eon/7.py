@@ -45,7 +45,7 @@ IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
 ratio = 360./90./52. # 한 바퀴에 약 4100펄스
 
 # PID 상수
-kp = 15. 
+kp = 10. 
 kd = 0.
 ki = 0.
 
@@ -75,13 +75,13 @@ try:
 
         # 역방향
         if(setha < 0) :
-            IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.HIGH)
+            IO.output(AIN1, control <= 0)
+            IO.output(AIN2, control >= 0)
 
             # seta가 모터 각도보다 크고 control이 플러스 값이 나오게 되면 모터가 멈춤
             if ((setha >= motorDeg) & (control >= 0)) :
-                IO.output(AIN1, IO.LOW)
-                IO.output(AIN2, IO.LOW)
+                IO.output(AIN1, control <= 0)
+                IO.output(AIN2, control <= 0)
                 p.ChangeDutyCycle(0)
 
             # 모터가 멈추기 전까지 control과 속도를 비교하여 최소값으로 모터 속도가 정해져서 돌아감
@@ -89,13 +89,13 @@ try:
 
         # 정방향
         elif (setha > 0) :
-            IO.output(AIN1, IO.HIGH)
-            IO.output(AIN2, IO.LOW)
+            IO.output(AIN1, control >= 0)
+            IO.output(AIN2, control <= 0)
 
             # seta가 모터 각도보다 작고 control이 마이너스 값이 나오게 되면 모터가 멈춤
             if((setha <= motorDeg) & (control <= 0)) :
-                IO.output(AIN1, IO.LOW)
-                IO.output(AIN2, IO.LOW)
+                IO.output(AIN1, control <= 0)
+                IO.output(AIN2, control <= 0)
                 p.ChangeDutyCycle(0)
 
             # 모터가 멈추기 전까지 control과 속도를 비교하여 최소값으로 모터 속도가 정해져서 돌아감
@@ -103,8 +103,8 @@ try:
 
         # RESET(현재 위치를 기준으로 각도를 읽어야 하므로 각도를 입력하기 전에 RESET을 해줘야 함.)
         elif (setha == 00) :
-            IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.LOW)
+            IO.output(AIN1, control <= 0)
+            IO.output(AIN2, control <= 0)
             p.ChangeDutyCycle(0)
 
             encoderPos = 0
