@@ -12,10 +12,6 @@ AIN1= 15
 AIN2= 18
 PWMA= 14
 
-
-# 듀티 비를 변화시킬 스텝 정의 
-c_step = 10   
-
 #각 핀을 출력 핀으로 설정 
 GPIO.setup(AIN1, GPIO.OUT, initial=GPIO.LOW)
 GPIO.setup(AIN2, GPIO.OUT, initial=GPIO.LOW)
@@ -29,3 +25,4 @@ while(1) :
     GPIO.output(AIN1, GPIO.HIGH)
     GPIO.output(AIN2, GPIO.LOW)
     p.ChangeDutyCycle(100) 
+    time.sleep(1)
