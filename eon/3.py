@@ -69,19 +69,18 @@ try:
 
         error_prev = error
         time_prev = time.time()
-
-        IO.output(AIN1, control >= 0)
+        
+        IO.output(AIN1, IO.HIGH)
+        IO.output(AIN2, IO.LOW)
         p.ChangeDutyCycle(min(abs(control), 100))
-
-        IO.output(AIN2, control <= 0)
 
         print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
         print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
         print('%f, %f' %(de, dt))
     
         if abs(error) <= tolerance :
-            IO.output(AIN1, control >=0)
-            IO.output(AIN2, control >=0)
+            IO.output(AIN1, IO.LOW)
+            IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
             break
     
