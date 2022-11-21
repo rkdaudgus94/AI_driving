@@ -79,13 +79,10 @@ try:
         print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
         print('%f, %f' %(de, dt))
     
-        if abs(error) <= tolerance :
-            IO.output(AIN1, control >= 0)
-            IO.output(AIN2, control <= 0)
+        IO.output(AIN1, control >= 0)
+        IO.output(AIN2, control <= 0)
+        p.ChangeDutyCycle(min(abs(control), 100))
 
-            p.ChangeDutyCycle(min(abs(control), 100))
-            break
-    
         time.sleep(dt_sleep)
 
     # Crtl + c 누르면 모터 작동 멈춤
