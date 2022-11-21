@@ -8,8 +8,8 @@ import time
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-AIN1= 2
-AIN2= 3
+AIN1= 15
+AIN2= 18
 PWMA= 14
 
 #각 핀을 출력 핀으로 설정 
