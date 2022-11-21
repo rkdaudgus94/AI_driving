@@ -80,7 +80,7 @@ try:
         print('%f, %f' %(de, dt))
     
         if abs(error) <= tolerance :
-            IO.output(AIN1, IO.LOW)
+            IO.output(AIN1, control >=0)
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
             break
