@@ -23,7 +23,7 @@ GPIO.setup(PWMA, GPIO.OUT, initial=GPIO.LOW)
 
 #PWM 객체 인스턴스 작성(출력 핀:12, 주파수 100)
 p = GPIO.PWM(PWMA, 100)
-p.start(0)
+p.start(100)
 
 GPIO.output(AIN1, GPIO.HIGH)
 GPIO.output(AIN2, GPIO.LOW)
