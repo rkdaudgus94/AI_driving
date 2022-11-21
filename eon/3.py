@@ -46,7 +46,7 @@ targetDeg = 360.
 ratio = 360./90./52.
 
 # PID 상수
-kp = 10.
+kp = 20.
 kd = 0.
 ki = 0.
 
@@ -72,7 +72,7 @@ try:
 
         IO.output(AIN1, control >= 0)
         IO.output(AIN2, IO.LOW)
-        
+
         p.ChangeDutyCycle(min(abs(control), 100))
 
         print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
