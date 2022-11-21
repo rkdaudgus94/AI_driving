@@ -5,6 +5,7 @@
 import RPi.GPIO as GPIO
 import time
 
+GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 AIN1= 15
