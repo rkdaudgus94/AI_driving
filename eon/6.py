@@ -23,33 +23,4 @@ GPIO.setup(PWMA, GPIO.OUT, initial=GPIO.LOW)
 
 #PWM 객체 인스턴스 작성(출력 핀:12, 주파수 100)
 p = GPIO.PWM(PWMA, 100)
-p.start(0)
-
-try:
-	while 1:
-		GPIO.output(AIN1, GPIO.HIGH)
-		for pw in range(0, 101, c_step): 
-			p.ChangeDutyCycle(pw)
-			time.sleep(0.5)
-		for pw in range(100, -1, c_step * -1): 
-			p.ChangeDutyCycle(pw)
-			time.sleep(0.5)
-		GPIO.output(AIN1, GPIO.LOW)
-		time.sleep(0.5)
-		GPIO.output(AIN2, GPIO.HIGH)
-		for pw in range(0, 101, c_step ): 
-			p.ChangeDutyCycle(pw)
-			time.sleep(0.5)
-
-		for pw in range(100, -1, c_step * -1): 
-			p.ChangeDutyCycle(pw) 
-			time.sleep(0.5)
-			GPIO.output(AIN2, GPIO.LOW)
-			time.sleep(0.5)
-
-except KeyboardInterrupt: 
-	pass 
-
-p.stop() 
-
-GPIO.cleanup()
+p.ChangeDUtyCyle(100)
