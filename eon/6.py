@@ -26,5 +26,5 @@ p = GPIO.PWM(PWMA, 100)
 p.start(0)
 
 GPIO.output(AIN1, GPIO.HIGH)
-GPIO.output(AIN2, GPIO.HIGH)
+GPIO.output(AIN2, GPIO.LOW)
 p.ChangeDutyCycle(100) 
