@@ -52,7 +52,7 @@ ki = 0.
 
 dt = 0.
 dt_sleep = 0.01
-tolerance = 0.01
+tolerance = 1
 
 start_time = time.time()
 error_prev = 0.
@@ -70,7 +70,7 @@ try:
         error_prev = error
         time_prev = time.time()
         
-        IO.output(AIN1, IO.HIGH)
+        IO.output(AIN1, control >= 0)
         IO.output(AIN2, IO.LOW)
         p.ChangeDutyCycle(min(abs(control), 100))
 
@@ -79,7 +79,7 @@ try:
         print('%f, %f' %(de, dt))
     
         if abs(error) <= tolerance :
-            IO.output(AIN1, IO.HIGH)
+            IO.output(AIN1, control >= 0)
             IO.output(AIN2, IO.LOW)
             p.ChangeDutyCycle(0)
             break
