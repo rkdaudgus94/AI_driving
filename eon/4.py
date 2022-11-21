@@ -58,7 +58,7 @@ time_prev = 0.
 
 try:
     # 원하는 모터 각도 (반복 입력 가능하게 수정해야 함.)
-    setha = input('각도를 입력하시오 : ')
+    setha = int(input('각도를 입력하시오 : '))
 
     while True:
         # motorDeg : 실제 모터 각도
