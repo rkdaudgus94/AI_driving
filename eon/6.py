@@ -1,32 +1,54 @@
+# DC모터 속도/방향 조절하기 
+# 천천히 회전하기 시작해서 회전 속도를 서서히 올리다가 최고 속도가 되면 다시 천천히 회전 속도를 낮춰서 정지 (회전 방향 바꿈)
+
+
 import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)
-GPIO_TRIGGER = 23
-GPIO_ECHO = 24
-print("start")
 
-GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
-GPIO.setup(GPIO_ECHO, GPIO.IN)
+AIN1= 15
+AIN2= 18
+PWMA= 14
+
+
+# 듀티 비를 변화시킬 스텝 정의 
+c_step = 10   
+
+#각 핀을 출력 핀으로 설정 
+GPIO.setup(AIN1, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(AIN2, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(PWMA, GPIO.OUT, initial=GPIO.LOW)
+
+#PWM 객체 인스턴스 작성(출력 핀:12, 주파수 100)
+p = GPIO.PWM(PWMA, 100)
+p.start(0)
 
 try:
-    while True:
-        StartTime = time.time()
-        StopTime = time.time()
-        GPIO.output(GPIO_TRIGGER, True)
-        time.sleep(0.00001)
-        GPIO.output(GPIO_TRIGGER, False)
+	while 1:
+		GPIO.output(AIN1, GPIO.HIGH)
+		for pw in range(0, 101, c_step): 
+			p.ChangeDutyCycle(pw)
+			time.sleep(0.5)
+		for pw in range(100, -1, c_step * -1): 
+			p.ChangeDutyCycle(pw)
+			time.sleep(0.5)
+		GPIO.output(AIN1, GPIO.LOW)
+		time.sleep(0.5)
+		GPIO.output(AIN2, GPIO.HIGH)
+		for pw in range(0, 101, c_step ): 
+			p.ChangeDutyCycle(pw)
+			time.sleep(0.5)
 
-        while GPIO.input(GPIO_ECHO) == 0:
-            StartTime = time.time()
-        
-        while GPIO.input(GPIO_ECHO) == 1:
-            StopTime = time.time()
-        
-        TimeElapsed = StopTime - StartTime
-        distance = round((TimeElapsed * 34300) / 2, 2)
-        print("Distance = ", distance, "cm")
-        time.sleep(1)
+		for pw in range(100, -1, c_step * -1): 
+			p.ChangeDutyCycle(pw) 
+			time.sleep(0.5)
+			GPIO.output(AIN2, GPIO.LOW)
+			time.sleep(0.5)
 
-except KeyboardInterrupt:
-    pass
+except KeyboardInterrupt: 
+	pass 
+
+p.stop() 
+
+GPIO.cleanup()
