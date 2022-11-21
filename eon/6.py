@@ -25,4 +25,4 @@ while(1) :
     GPIO.output(AIN1, GPIO.HIGH)
     GPIO.output(AIN2, GPIO.LOW)
     p.ChangeDutyCycle(100) 
-    time.sleep(1)
+time.sleep(1)
