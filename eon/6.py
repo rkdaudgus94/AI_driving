@@ -23,4 +23,4 @@ GPIO.setup(PWMA, GPIO.OUT, initial=GPIO.LOW)
 
 #PWM 객체 인스턴스 작성(출력 핀:12, 주파수 100)
 p = GPIO.PWM(PWMA, 100)
-p.ChangeDUtyCyle(100)
+p.ChangeDutyCycle(100) 
