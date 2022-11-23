@@ -71,7 +71,7 @@ try:
         time_prev = time.time()
 
         IO.output(AIN1, control >= 0)
-        IO.output(AIN2, IO.LOW)
+        IO.output(AIN2, control <= 0)
 
         p.ChangeDutyCycle(min(abs(control), 100))
 
@@ -80,10 +80,9 @@ try:
         print('%f, %f' %(de, dt))
     
         if abs(error) <= tolerance :
-            IO.ouput(AIN1, control >= 0)
-            IO.output(AIN2, control <= 0)
-
-            p.ChangeDutyCycle(min(abs(control), 100))
+            IO.output(AIN1, control >=0)
+            IO.output(AIN2, control >=0)
+            p.ChangeDutyCycle(0)
             break
     
         time.sleep(dt_sleep)
