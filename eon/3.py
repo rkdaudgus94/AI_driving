@@ -46,7 +46,7 @@ targetDeg = 360.
 ratio = 360./90./52.
 
 # PID 상수
-kp = 9.
+kp = 10.
 kd = 0.
 ki = 0.
 
@@ -68,10 +68,10 @@ try:
         control = (kp*error) + (kd*de/dt) + (ki*error*dt)
 
         error_prev = error
-        time_prev = time.time()
+        
 
         IO.output(AIN1, control >= 0)
-        IO.output(AIN2, control <=0)
+        IO.output(AIN2, control <= 0)
         p.ChangeDutyCycle(min(abs(control), 100))
 
         print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
@@ -83,7 +83,8 @@ try:
             IO.output(AIN2, control <=0)
             p.ChangeDutyCycle(0)
             break
-    
+
+        time_prev = time.time()
         time.sleep(dt_sleep)
 
     # Crtl + c 누르면 모터 작동 멈춤
