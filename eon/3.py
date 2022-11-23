@@ -71,7 +71,7 @@ try:
         time_prev = time.time()
 
         IO.output(AIN1, control >= 0)
-        IO.output(AIN2, control == 0)
+        IO.output(AIN2, control <= 0)
         p.ChangeDutyCycle(min(abs(control), 100))
 
         print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
@@ -79,8 +79,8 @@ try:
         print('%f, %f' %(de, dt)) 
     
         if abs(error) <= tolerance :
-            IO.ouput(AIN1, control >= 0)
-            IO.output(AIN2, control <= 0)
+            IO.ouput(AIN1,  IO.HIGH)
+            IO.output(AIN2, IO.LOW)
 
             p.ChangeDutyCycle(min(abs(control), 100))
             break
