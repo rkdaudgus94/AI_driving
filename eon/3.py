@@ -80,7 +80,7 @@ try:
     
         if abs(error) <= tolerance :
             IO.ouput(AIN1, control >= 0)
-            IO.output(AIN2, control <= 0)
+            IO.output(AIN2, control >= 0)
 
             p.ChangeDutyCycle(min(abs(control), 100))
             break
