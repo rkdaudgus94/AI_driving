@@ -52,7 +52,7 @@ ki = 0.
 
 dt = 0.
 dt_sleep = 0.01
-tolerance = 0.1
+tolerance = 0.5
 
 start_time = time.time()
 error_prev = 0.
