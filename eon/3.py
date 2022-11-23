@@ -51,6 +51,7 @@ kd = 0.
 ki = 0.
 
 dt = 0.
+di = 0.
 dt_sleep = 0.01
 tolerance = 0.1
 
@@ -64,8 +65,9 @@ try:
 
         error = targetDeg - motorDeg
         de = error - error_prev
+        di += error * dt 
         dt = time.time() - time_prev
-        control = (kp*error) + (kd*de/dt) + (ki*error*dt)
+        control = (kp*error) + (kd*de/dt) + (ki*di)
 
         error_prev = error
         
