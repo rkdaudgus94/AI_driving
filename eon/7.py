@@ -5,11 +5,14 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO.BCM)
-
 AIN1= 15
 AIN2= 18 
 PWMA= 14
+
+GPIO.setmode(GPIO.BCM)
+
+# 듀티 비를 변화시킬 스텝 정의 
+c_step = 10   
 
 #각 핀을 출력 핀으로 설정 
 GPIO.setup(AIN1, GPIO.OUT, initial=GPIO.LOW)
