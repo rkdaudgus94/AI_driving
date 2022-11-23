@@ -70,8 +70,10 @@ try:
         error_prev = error
         time_prev = time.time()
 
-        IO.output(AIN1, control >= 0)
+       # IO.output(AIN1, control >= 0)
+       # IO.output(AIN2, control <= 0)
         IO.output(AIN2, control <= 0)
+        IO.output(AIN2, IO.HIGH)
 
         p.ChangeDutyCycle(min(abs(control), 100))
 
