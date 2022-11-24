@@ -46,9 +46,9 @@ targetDeg = 360.
 ratio = 360./90./52.
 
 # PID 상수
-kp = 0.5
-kd = 0.4
-ki = 0.3
+kp = input("KP:")   #0.5
+kd = input("KD:")   #0.4
+ki = input("KI:")   #0.3
 
 dt = 0.
 di = 0.
