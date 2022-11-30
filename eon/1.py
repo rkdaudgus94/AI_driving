@@ -7,11 +7,9 @@ import time
 
 GPIO.setmode(GPIO.BOARD)
 
-AIN1= 10
-AIN2= 12 
-PWMA= 8
-
-
+AIN1= 13
+AIN2= 15 
+PWMA= 12
 
 # 듀티 비를 변화시킬 스텝 정의 
 c_step = 10   
