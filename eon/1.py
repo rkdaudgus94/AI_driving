@@ -5,11 +5,11 @@
 import RPi.GPIO as GPIO
 import time
 
-GPIO.setmode(GPIO.BOARD)
+GPIO.setmode(GPIO.BCM)
 
-AIN1= 5
-AIN2= 6 
-PWMA= 13
+AIN1= 15
+AIN2= 18
+PWMA= 14
 
 
 
