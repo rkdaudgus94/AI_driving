@@ -25,8 +25,6 @@ try :
         GPIO.output(AIN2, GPIO.LOW)
         p.ChangeDutyCycle(100)
 
-        print('회전')
-
         time.sleep(0.5)
 
 except KeyboardInterrupt: 
