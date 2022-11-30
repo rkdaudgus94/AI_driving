@@ -7,9 +7,9 @@ import time
 
 GPIO.setmode(GPIO.BOARD)
 
-AIN1= 5
-AIN2= 6 
-PWMA= 13
+AIN1= 10
+AIN2= 12 
+PWMA= 8
 
 
 
