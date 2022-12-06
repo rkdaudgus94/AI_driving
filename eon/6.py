@@ -143,14 +143,15 @@ try:
     
         if (motorDegA >= targetDeg) &  (motorDegB >= -targetDeg):
             IO.output(AIN1, controlA, IO.LOW)
-            IO.output(AIN2, controlA, IO.HIGH)
+            IO.output(AIN2, controlA, IO.LOW)
             IO.output(BIN3, controlB, IO.LOW)
-            IO.output(BIN4, controlB, IO.HIGH)
+            IO.output(BIN4, controlB, IO.LOW)
             time.sleep(0.5)
             p1.ChangeDutyCycle(0)
             p2.ChangeDutyCycle(0)
             p1.stop()
             p2.stop()
+            print('stop')
 
         time_prev = time.time()
         time.sleep(dt_sleep)
