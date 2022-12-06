@@ -134,6 +134,7 @@ try:
         IO.output(AIN2, IO.HIGH)
         IO.output(BIN3, IO.LOW)
         IO.output(BIN4, IO.HIGH)
+        
         time.sleep(0.5)
         p1.ChangeDutyCycle(min(abs(controlA), 100))
         p2.ChangeDutyCycle(min(abs(controlB), 100))
