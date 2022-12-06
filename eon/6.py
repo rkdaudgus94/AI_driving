@@ -126,7 +126,7 @@ try:
         dt = time.time() - time_prev
 
         delta_vB = kp*de_B + ki*errorB + kd*(errorB - 2*error_prev_B + error_prev_prev_B)
-        controlB += delta_vB
+        controlB -= delta_vB
         error_prev_B = errorB
         error_prev_prev_B = error_prev_B
         
