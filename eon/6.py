@@ -39,28 +39,28 @@ encoderPosA = 0
 encoderPosB = 0
 
 def encoderA(encPinA):
-    global encoderPos
+    global encoderPosA
     if IO.input(encPinA) == IO.input(encPinB):
         encoderPosA += 1 
     else:
         encoderPosA -= 1
    
 def encoderB(encPinB):
-    global encoderPos
+    global encoderPosA
     if IO.input(encPinA) == IO.input(encPinB):
         encoderPosA -= 1
     else:
         encoderPosA += 1
 
 def encoderC(encPinC):
-    global encoderPos
+    global encoderPosB
     if IO.input(encPinC) == IO.input(encPinD):
         encoderPosB += 1 
     else:
         encoderPosB -= 1
    
 def encoderD(encPinD):
-    global encoderPos
+    global encoderPosB
     if IO.input(encPinC) == IO.input(encPinD):
         encoderPosB -= 1
     else:
