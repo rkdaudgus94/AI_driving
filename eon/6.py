@@ -130,10 +130,10 @@ try:
         error_prev_B = errorB
         error_prev_prev_B = error_prev_B
         
-        IO.output(AIN1, controlA >= 0)
-        IO.output(AIN2, controlA <= 0)
-        IO.output(BIN3, controlB <= 0)
-        IO.output(BIN4, controlB >= 0)
+        IO.output(AIN1, IO.HIGH)
+        IO.output(AIN2, IO.LOW)
+        IO.output(BIN3, IO.HIGH)
+        IO.output(BIN4, IO.LOW)
         time.sleep(0.5)
         p1.ChangeDutyCycle(min(abs(controlA), 100))
         p2.ChangeDutyCycle(min(abs(controlB), 100))
@@ -142,10 +142,10 @@ try:
         print('encB = %d, degB = %5.1f, errB = %5.1f, ctrlB = %7.1f' %(encoderPosA, motorDegB, errorB, controlB))
     
         if (abs(errorA) <= tolerance) &  (abs(errorB) <= tolerance):
-            IO.output(AIN1, controlA >=0)
-            IO.output(AIN2, controlA <=0)
-            IO.output(BIN3, controlB <=0)
-            IO.output(BIN4, controlB >=0)
+            IO.output(AIN1, controlA, IO.HIGH)
+            IO.output(AIN2, controlA, IO.LOW)
+            IO.output(BIN3, controlB, IO.HIGH)
+            IO.output(BIN4, controlB, IO.LOW)
             time.sleep(0.5)
             p1.ChangeDutyCycle(0)
             p2.ChangeDutyCycle(0)
