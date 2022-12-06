@@ -130,10 +130,10 @@ try:
         error_prev_B = errorB
         error_prev_prev_B = error_prev_B
         
-        IO.output(AIN1, IO.HIGH)
-        IO.output(AIN2, IO.LOW)
-        IO.output(BIN3, IO.HIGH)
-        IO.output(BIN4, IO.LOW)
+        IO.output(AIN1, IO.LOW)
+        IO.output(AIN2, IO.HIGH)
+        IO.output(BIN3, IO.LOW)
+        IO.output(BIN4, IO.HIGH)
         time.sleep(0.5)
         p1.ChangeDutyCycle(min(abs(controlA), 100))
         p2.ChangeDutyCycle(min(abs(controlB), 100))
@@ -143,8 +143,8 @@ try:
     
         if (abs(errorA) <= tolerance) &  (abs(errorB) <= tolerance):
             IO.output(AIN1, controlA, IO.LOW)
-            IO.output(AIN2, controlA, IO.HIGH)
-            IO.output(BIN3, controlB, IO.HIGH)
+            IO.output(AIN2, controlA, IO.LOW)
+            IO.output(BIN3, controlB, IO.LOW)
             IO.output(BIN4, controlB, IO.LOW)
             time.sleep(0.5)
             p1.ChangeDutyCycle(0)
