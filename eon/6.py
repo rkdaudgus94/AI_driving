@@ -127,8 +127,8 @@ try:
 
         delta_vB = kp*de_B + ki*errorB + kd*(errorB - 2*error_prev_B + error_prev_prev_B)
         controlB += delta_vB
-        error_prev = errorB
-        error_prev_prev = error_prev
+        error_prev_B = errorB
+        error_prev_prev_B = error_prev_B
         
         IO.output(AIN1, controlA >= 0)
         IO.output(AIN2, controlA <= 0)
