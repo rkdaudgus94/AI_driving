@@ -142,26 +142,23 @@ try:
         print('encB = %d, degB = %5.1f, errB = %5.1f, ctrlB = %7.1f' %(encoderPosB, motorDegB, errorB, controlB))
     
         if (motorDegA >= targetDeg) &  (controlA <= 0):
-<<<<<<< HEAD
             IO.output(AIN1, controlA, IO.LOW)
             IO.output(AIN2, controlA, IO.LOW)
-=======
+
             IO.output(AIN1, IO.LOW)
             IO.output(AIN2, IO.LOW)
->>>>>>> 95ee81ed49eede2b89eceb80900461d2a4725fa8
             time.sleep(0.01)
             p1.ChangeDutyCycle(0)
             print('stopA')
 
-<<<<<<< HEAD
         if (motorDegB >= -targetDeg) &  (controlB >= 0):
             IO.output(BIN3, controlA, IO.LOW)
             IO.output(BIN4, controlA, IO.LOW)
-=======
+
         if (motorDegB <= -targetDeg) &  (controlB >= 0):
             IO.output(BIN3, IO.LOW)
             IO.output(BIN4, IO.LOW)
->>>>>>> 95ee81ed49eede2b89eceb80900461d2a4725fa8
+
             time.sleep(0.01)
             p2.ChangeDutyCycle(0)
             print('stopB')
