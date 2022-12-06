@@ -141,7 +141,7 @@ try:
         print('encA = %d, degA = %5.1f, errA = %5.1f, ctrlA = %7.1f' %(encoderPosA, motorDegA, errorA, controlA))
         print('encB = %d, degB = %5.1f, errB = %5.1f, ctrlB = %7.1f' %(encoderPosB, motorDegB, errorB, controlB))
     
-        if (motorDegA >= targetDeg) &  (motorDegB <= targetDeg):
+        if (motorDegA >= targetDeg) &  (motorDegB >= -targetDeg):
             IO.output(AIN1, controlA, IO.LOW)
             IO.output(AIN2, controlA, IO.HIGH)
             IO.output(BIN3, controlB, IO.LOW)
