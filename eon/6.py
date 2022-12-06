@@ -132,8 +132,8 @@ try:
         
         IO.output(AIN1, controlA >= 0)
         IO.output(AIN2, controlA <= 0)
-        IO.output(BIN3, controlB <= 0)
-        IO.output(BIN4, controlB >= 0)
+        IO.output(BIN3, controlB >= 0)
+        IO.output(BIN4, controlB <= 0)
         time.sleep(0.5)
         p1.ChangeDutyCycle(min(abs(controlA), 100))
         p2.ChangeDutyCycle(min(abs(controlB), 100))
@@ -144,8 +144,8 @@ try:
         if (abs(errorA) <= tolerance) &  (abs(errorB) <= tolerance):
             IO.output(AIN1, controlA >=0)
             IO.output(AIN2, controlA <=0)
-            IO.output(BIN3, controlB >=0)
-            IO.output(BIN4, controlB <=0)
+            IO.output(BIN3, controlB <=0)
+            IO.output(BIN4, controlB >=0)
             time.sleep(0.5)
             p1.ChangeDutyCycle(0)
             p2.ChangeDutyCycle(0)
