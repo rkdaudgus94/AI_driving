@@ -149,7 +149,6 @@ try:
             time.sleep(0.5)
             p1.ChangeDutyCycle(0)
             p2.ChangeDutyCycle(0)
-            break
 
         time_prev = time.time()
         time.sleep(dt_sleep)
