@@ -146,7 +146,6 @@ try:
             IO.output(AIN2, controlA, IO.LOW)
             time.sleep(0.01)
             p1.ChangeDutyCycle(0)
-            p1.stop()
             print('stop')
 
         if (motorDegB >= -targetDeg) &  (controlB >= 0):
@@ -154,7 +153,6 @@ try:
             IO.output(BIN4, controlA, IO.LOW)
             time.sleep(0.01)
             p2.ChangeDutyCycle(0)
-            p2.stop()
             print('stop')
 
         time_prev = time.time()
