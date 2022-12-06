@@ -143,9 +143,9 @@ try:
     
         if (motorDegA >= targetDeg) &  (motorDegB <= targetDeg):
             IO.output(AIN1, controlA, IO.LOW)
-            IO.output(AIN2, controlA, IO.LOW)
+            IO.output(AIN2, controlA, IO.HIGH)
             IO.output(BIN3, controlB, IO.LOW)
-            IO.output(BIN4, controlB, IO.LOW)
+            IO.output(BIN4, controlB, IO.HIGH)
             time.sleep(0.5)
             p1.ChangeDutyCycle(0)
             p2.ChangeDutyCycle(0)
