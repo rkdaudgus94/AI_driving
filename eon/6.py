@@ -1,6 +1,6 @@
 # DC 모터 2개 Control
 
-import RPI.GPIO as IO
+import RPi.GPIO as IO
 import time
 
 # DC 모터 왼쪽
