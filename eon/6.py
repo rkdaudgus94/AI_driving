@@ -143,8 +143,8 @@ try:
     
         if (abs(errorA) <= tolerance) &  (abs(errorB) <= tolerance):
             IO.output(AIN1, controlA, IO.LOW)
-            IO.output(AIN2, controlA, IO.HIGH)
-            IO.output(BIN3, controlB, IO.HIGH)
+            IO.output(AIN2, controlA, IO.LOW)
+            IO.output(BIN3, controlB, IO.LOW)
             IO.output(BIN4, controlB, IO.LOW)
             time.sleep(0.5)
             p1.ChangeDutyCycle(0)
