@@ -146,14 +146,14 @@ try:
             IO.output(AIN2, IO.LOW)
             time.sleep(0.01)
             p1.ChangeDutyCycle(0)
-            print('stop')
+            print('stopA')
 
-        if (motorDegB >= -targetDeg) &  (controlB >= 0):
+        if (motorDegB <= -targetDeg) &  (controlB >= 0):
             IO.output(BIN3, IO.LOW)
             IO.output(BIN4, IO.LOW)
             time.sleep(0.01)
             p2.ChangeDutyCycle(0)
-            print('stop')
+            print('stopB')
 
         time_prev = time.time()
         time.sleep(dt_sleep)
