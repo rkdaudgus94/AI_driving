@@ -75,7 +75,7 @@ IO.add_event_detect(encPinD, IO.BOTH, callback=encoderD)
 targetDeg = 360.
 
 # PID 제어
-ratio = 360./50./52.
+ratio = 360./50./50.
 
 # PID 상수
 kp = float(input("KP:"))   #0.5
@@ -85,12 +85,12 @@ ki = float(input("KI:"))   #0.3
 # DC 모터 왼쪽
 di_A = 0.
 error_prev_A = 0.
-
+error_prev_prev_A = 0.
 
 # DC 모터 오른쪽
 di_B = 0.
 error_prev_B = 0.
-
+error_prev_prev_B = 0.
 
 dt = 0.
 dt_sleep = 0.01
@@ -112,8 +112,10 @@ try:
         di_A += errorA * dt
         dt = time.time() - time_prev
 
-        controlA = (kp*errorA) + (kd*de_A/dt) + (ki*di_A)
-        eorror_prev_A = errorA
+        delta_vA = kp*de_A + ki*errorA + kd*(errorA - 2*error_prev_A + error_prev_prev_A)
+        controlA += delta_vA
+        error_prev_A = errorA
+        error_prev_prev_A = error_prev_A
 
         # DC 모터 오른쪽
         motorDegB = encoderPosB * ratio
@@ -123,8 +125,10 @@ try:
         di_B += errorB * dt
         dt = time.time() - time_prev
 
-        controlB = (kp*errorB) + (kd*de_B/dt) + (ki*di_B)
-        eorror_prev_B = errorB
+        delta_vB = kp*de_B + ki*errorB + kd*(errorB - 2*error_prev_B + error_prev_prev_B)
+        controlB += delta_vB
+        error_prev_B = errorB
+        error_prev_prev_B = error_prev_B
         
         IO.output(AIN1, IO.LOW)
         IO.output(AIN2, IO.HIGH)
@@ -137,19 +141,19 @@ try:
         print('encA = %d, degA = %5.1f, errA = %5.1f, ctrlA = %7.1f' %(encoderPosA, motorDegA, errorA, controlA))
         print('encB = %d, degB = %5.1f, errB = %5.1f, ctrlB = %7.1f' %(encoderPosB, motorDegB, errorB, controlB))
     
-        if (motorDegA >= targetDeg) & (controlA <= 0):
-            IO.output(AIN1, controlA, IO.LOW)
-            IO.output(AIN2, controlA, IO.LOW)
+        if (motorDegA >= targetDeg) &  (controlA <= 0):
+            IO.output(AIN1, IO.LOW)
+            IO.output(AIN2, IO.LOW)
             time.sleep(0.01)
             p1.ChangeDutyCycle(0)
-            print('stop')
+            print('stopA')
 
-        if (motorDegB >= -targetDeg) & (controlB >= 0):
-            IO.output(BIN3, controlA, IO.LOW)
-            IO.output(BIN4, controlA, IO.LOW)
+        if (motorDegB <= -targetDeg) &  (controlB >= 0):
+            IO.output(BIN3, IO.LOW)
+            IO.output(BIN4, IO.LOW)
             time.sleep(0.01)
             p2.ChangeDutyCycle(0)
-            print('stop')
+            print('stopB')
 
         time_prev = time.time()
         time.sleep(dt_sleep)
