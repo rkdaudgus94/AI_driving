@@ -134,22 +134,26 @@ try:
         IO.output(AIN2, IO.HIGH)
         IO.output(BIN3, IO.LOW)
         IO.output(BIN4, IO.HIGH)
-        time.sleep(0.5)
+        time.sleep(0.01)
         p1.ChangeDutyCycle(min(abs(controlA), 100))
         p2.ChangeDutyCycle(min(abs(controlB), 100))
 
         print('encA = %d, degA = %5.1f, errA = %5.1f, ctrlA = %7.1f' %(encoderPosA, motorDegA, errorA, controlA))
         print('encB = %d, degB = %5.1f, errB = %5.1f, ctrlB = %7.1f' %(encoderPosB, motorDegB, errorB, controlB))
     
-        if (motorDegA >= targetDeg) &  (motorDegB >= -targetDeg):
+        if (motorDegA >= targetDeg) &  (controlA <= 0):
             IO.output(AIN1, controlA, IO.LOW)
             IO.output(AIN2, controlA, IO.LOW)
-            IO.output(BIN3, controlB, IO.LOW)
-            IO.output(BIN4, controlB, IO.LOW)
-            time.sleep(0.5)
+            time.sleep(0.01)
             p1.ChangeDutyCycle(0)
-            p2.ChangeDutyCycle(0)
             p1.stop()
+            print('stop')
+
+        if (motorDegB >= -targetDeg) &  (controlB >= 0):
+            IO.output(BIN3, controlA, IO.LOW)
+            IO.output(BIN4, controlA, IO.LOW)
+            time.sleep(0.01)
+            p2.ChangeDutyCycle(0)
             p2.stop()
             print('stop')
 
