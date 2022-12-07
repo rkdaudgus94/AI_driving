@@ -130,10 +130,10 @@ try:
         error_prev_B = errorB
         error_prev_prev_B = error_prev_B
 
-        IO.output(AIN1, controlA >= 0)
-        IO.output(AIN2, controlA <= 0)
-        IO.output(BIN3, controlB >= 0)
-        IO.output(BIN4, controlB <= 0)
+        IO.output(AIN1, controlA <= 0)
+        IO.output(AIN2, controlA >= 0)
+        IO.output(BIN3, controlB <= 0)
+        IO.output(BIN4, controlB >= 0)
 
        # IO.output(AIN1, IO.LOW)
        # IO.output(AIN2, IO.HIGH)
