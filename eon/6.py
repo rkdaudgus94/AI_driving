@@ -149,12 +149,12 @@ try:
 
             time.sleep(0.01)
             p1.ChangeDutyCycle(0)
+            p2.ChangeDutyCycle(0)
             print('stopA')
 
         if (motorDegB >= targetDeg) & (controlB <= 0) :    
 
             time.sleep(0.01)
-            p2.ChangeDutyCycle(0)
             print('stopB')
 
         time_prev = time.time()
