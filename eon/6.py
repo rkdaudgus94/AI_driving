@@ -149,7 +149,7 @@ try:
             p1.ChangeDutyCycle(0)
             print('stopA')
 
-        if (motorDegB >= targetDeg) & (controlA <= 0) :     
+        if (motorDegB >= targetDeg) & (controlB <= 0) :     
             IO.output(BIN3, IO.LOW)
             IO.output(BIN4, IO.LOW)
 
