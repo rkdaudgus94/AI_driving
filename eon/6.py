@@ -152,8 +152,8 @@ try:
             print('stopA')
 
         if (motorDegB >= -targetDeg) &  (controlB >= 0):
-            IO.output(BIN3, controlA, IO.LOW)
-            IO.output(BIN4, controlA, IO.LOW)
+            IO.output(BIN3, controlB, IO.LOW)
+            IO.output(BIN4, controlB, IO.LOW)
 
         if (motorDegB <= -targetDeg) &  (controlB >= 0):
             IO.output(BIN3, IO.LOW)
