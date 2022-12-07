@@ -3,41 +3,42 @@
 import RPi.GPIO as IO
 import time
 
-pwmPin = 14 # 모터드라이버 ENA
-AIN1 = 15 # IN 1
-AIN2 = 18 # IN 2
-encPinA = 2 # 보라색 (A)
-encPinB = 3 # 파랑색 (B)
+pwmPinB = 17 # 모터드라이버 ENB
+BIN3 = 27 # IN 3
+BIN4 = 22 # IN 4
+encPinC = 20 # 보라색 (C)
+encPinD = 21 # 파랑색 (D)
+
 
 IO.setmode(IO.BCM)
 IO.setwarnings(False)
-IO.setup(encPinA, IO.IN, pull_up_down=IO.PUD_UP)
-IO.setup(encPinB, IO.IN, pull_up_down=IO.PUD_UP)
-IO.setup(pwmPin, IO.OUT, initial=IO.LOW)
-IO.setup(AIN1, IO.OUT, initial=IO.LOW)
-IO.setup(AIN2, IO.OUT, initial=IO.LOW)
+IO.setup(encPinC, IO.IN, pull_up_down=IO.PUD_UP)
+IO.setup(encPinD, IO.IN, pull_up_down=IO.PUD_UP)
+IO.setup(pwmPinB, IO.OUT, initial=IO.LOW)
+IO.setup(BIN3, IO.OUT, initial=IO.LOW)
+IO.setup(BIN4, IO.OUT, initial=IO.LOW)
 
 p = IO.PWM(14, 100)
 p.start(0)
 
-encoderPos = 0
+encoderPosB = 0
 
-def encoderA(encPinA):
-    global encoderPos
-    if IO.input(encPinA) == IO.input(encPinB):
-        encoderPos += 1 
+def encoderA(encPinC):
+    global encoderPosB
+    if IO.input(encPinC) == IO.input(encPinD):
+        encoderPosB += 1 
     else:
-        encoderPos -= 1
+        encoderPosB -= 1
    
-def encoderB(encPinB):
-    global encoderPos
-    if IO.input(encPinA) == IO.input(encPinB):
-        encoderPos -= 1
+def encoderB(encPinD):
+    global encoderPosB
+    if IO.input(encPinC) == IO.input(encPinD):
+        encoderPosB -= 1
     else:
-        encoderPos += 1
+        encoderPosB += 1
 
-IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
-IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
+IO.add_event_detect(encPinC, IO.BOTH, callback=encoderA)
+IO.add_event_detect(encPinD, IO.BOTH, callback=encoderB)
 
 # 원하는 각도
 targetDeg = 360.
@@ -62,7 +63,7 @@ time_prev = 0.
 control = 0.
 try:
     while True:
-        motorDeg = encoderPos * ratio
+        motorDeg = encoderPosB * ratio
 
         error = targetDeg - motorDeg
         de = error - error_prev
@@ -77,18 +78,18 @@ try:
         error_prev = error
         error_prev_prev = error_prev
         
-        IO.output(AIN1, control >= 0)
-        IO.output(AIN2, control <= 0)
+        IO.output(BIN3, control >= 0)
+        IO.output(BIN4, control <= 0)
         time.sleep(0.5)
         p.ChangeDutyCycle(min(abs(control), 100))
 
         print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
-        print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
+        print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPosB, motorDeg, error, control))
         print('%f, %f' %(de, dt))
     
         if abs(error) <= tolerance :
-            IO.output(AIN1, control >=0)
-            IO.output(AIN2, control <=0)
+            IO.output(BIN3, control >=0)
+            IO.output(BIN4, control <=0)
             time.sleep(0.5)
             p.ChangeDutyCycle(0)
             break
