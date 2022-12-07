@@ -18,7 +18,7 @@ IO.setup(pwmPinB, IO.OUT, initial=IO.LOW)
 IO.setup(BIN3, IO.OUT, initial=IO.LOW)
 IO.setup(BIN4, IO.OUT, initial=IO.LOW)
 
-p = IO.PWM(14, 100)
+p = IO.PWM(17, 100)
 p.start(0)
 
 encoderPosB = 0
