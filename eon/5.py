@@ -72,10 +72,10 @@ try:
 
         error_prev = error
         
-        #delta_v = kp*de + ki*error + kd*(error - 2*error_prev + error_prev_prev)
-        #control += delta_v
-        #error_prev = error
-        #error_prev_prev = error_prev
+        # delta_v = kp*de + ki*error + kd*(error - 2*error_prev + error_prev_prev)
+        # control += delta_v
+        # error_prev = error
+        # error_prev_prev = error_prev
         
         IO.output(AIN1, control >= 0)
         IO.output(AIN2, control <= 0)
