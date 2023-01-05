@@ -3,178 +3,101 @@
 import RPi.GPIO as IO
 import time
 
-# DC 모터 왼쪽
-pwmPinA = 14 # 모터드라이버 ENA
+pwmPin = 14 # 모터드라이버 ENA
 AIN1 = 15 # IN 1
 AIN2 = 18 # IN 2
 encPinA = 2 # 보라색 (A)
 encPinB = 3 # 파랑색 (B)
 
-# DC 모터 오른쪽
-pwmPinB = 17 # 모터드라이버 ENB
-BIN3 = 27 # IN 3
-BIN4 = 22 # IN 4
-encPinC = 20 # 보라색 (C)
-encPinD = 21 # 파랑색 (D)
-
 IO.setmode(IO.BCM)
 IO.setwarnings(False)
 IO.setup(encPinA, IO.IN, pull_up_down=IO.PUD_UP)
 IO.setup(encPinB, IO.IN, pull_up_down=IO.PUD_UP)
-IO.setup(encPinC, IO.IN, pull_up_down=IO.PUD_UP)
-IO.setup(encPinD, IO.IN, pull_up_down=IO.PUD_UP)
-IO.setup(pwmPinA, IO.OUT, initial=IO.LOW)
-IO.setup(pwmPinB, IO.OUT, initial=IO.LOW)
+IO.setup(pwmPin, IO.OUT, initial=IO.LOW)
 IO.setup(AIN1, IO.OUT, initial=IO.LOW)
 IO.setup(AIN2, IO.OUT, initial=IO.LOW)
-IO.setup(BIN3, IO.OUT, initial=IO.LOW)
-IO.setup(BIN4, IO.OUT, initial=IO.LOW)
 
-p1 = IO.PWM(pwmPinA, 100)
-p2 = IO.PWM(pwmPinB, 100)
-p1.start(0)
-p2.start(0)
+p = IO.PWM(14, 100)
+p.start(0)
 
-encoderPosA = 0
-encoderPosB = 0
-targetDegA = 0
-targetDegB = 0
+encoderPos = 0
 
 def encoderA(encPinA):
-    global encoderPosA
+    global encoderPos
     if IO.input(encPinA) == IO.input(encPinB):
-        encoderPosA += 1 
+        encoderPos += 1 
     else:
-        encoderPosA -= 1
+        encoderPos -= 1
    
 def encoderB(encPinB):
-    global encoderPosA
+    global encoderPos
     if IO.input(encPinA) == IO.input(encPinB):
-        encoderPosA -= 1
+        encoderPos -= 1
     else:
-        encoderPosA += 1
-
-def encoderC(encPinC):
-    global encoderPosB
-    if IO.input(encPinC) == IO.input(encPinD):
-        encoderPosB += 1 
-    else:
-        encoderPosB -= 1
-   
-def encoderD(encPinD):
-    global encoderPosB
-    if IO.input(encPinC) == IO.input(encPinD):
-        encoderPosB -= 1
-    else:
-        encoderPosB += 1
+        encoderPos += 1
 
 IO.add_event_detect(encPinA, IO.BOTH, callback=encoderA)
 IO.add_event_detect(encPinB, IO.BOTH, callback=encoderB)
-IO.add_event_detect(encPinC, IO.BOTH, callback=encoderC)
-IO.add_event_detect(encPinD, IO.BOTH, callback=encoderD)
+
+# 원하는 각도
+targetDeg = 360.
 
 # PID 제어
-ratio = 360./264./20.
+ratio = 360./90./52.
 
 # PID 상수
 kp = float(input("KP:"))   #0.5
 kd = float(input("KD:"))   #0.4
 ki = float(input("KI:"))   #0.3
 
-# DC 모터 왼쪽
-di_A = 0.
-error_prev_A = 0.
-error_prev_prev_A = 0.
-
-# DC 모터 오른쪽
-di_B = 0.
-error_prev_B = 0.
-error_prev_prev_B = 0.
-
 dt = 0.
+di = 0.
 dt_sleep = 0.01
 tolerance = 0.1
 
 start_time = time.time()
-
+error_prev = 0.
+error_prev_prev = 0.
 time_prev = 0.
-controlA = 0.
-controlB = 0.
 
 try:
-    # 원하는 모터 각도 입력
-    targetDegA = int(input('각도를 입력하시오 : '))
-    targetDegB = int(input('각도를 입력하시오 : '))
-
     while True:
-        # DC 모터 왼쪽
-        motorDegA = encoderPosA * ratio
+        motorDeg = encoderPos * ratio
 
-        errorA = targetDegA - motorDegA
-        de_A = errorA - error_prev_A
-        di_A += errorA * dt
+        error = targetDeg - motorDeg
+        de = error - error_prev
+        di += error * dt 
         dt = time.time() - time_prev
+        control = (kp*error) + (kd*de/dt) + (ki*di)
 
-        delta_vA = kp*de_A + ki*errorA + kd*(errorA - 2*error_prev_A + error_prev_prev_A)
-        controlA += delta_vA
-        error_prev_A = errorA
-        error_prev_prev_A = error_prev_A
+        error_prev = error
+        
+        # delta_v = kp*de + ki*error + kd*(error - 2*error_prev + error_prev_prev)
+        # control += delta_v
+        # error_prev = error
+        # error_prev_prev = error_prev
+        
+        IO.output(AIN1, control >= 0)
+        IO.output(AIN2, control <= 0)
+        time.sleep(0.5)
+        p.ChangeDutyCycle(min(abs(control), 100))
 
-        # DC 모터 오른쪽
-        motorDegB = -(encoderPosB * ratio)
-
-        errorB = targetDegB - motorDegB
-        de_B = errorB - error_prev_B
-        di_B += errorB * dt
-        dt = time.time() - time_prev
-
-        delta_vB = kp*de_B + ki*errorB + kd*(errorB - 2*error_prev_B + error_prev_prev_B)
-        controlB += delta_vB
-        error_prev_B = errorB
-        error_prev_prev_B = error_prev_B
-
-        IO.output(AIN1, IO.LOW)
-        IO.output(AIN2, IO.HIGH)
-        IO.output(BIN3, IO.LOW)
-        IO.output(BIN4, IO.HIGH)
-        time.sleep(0.01)
-        p1.ChangeDutyCycle(min(abs(controlA), 100))
-        p2.ChangeDutyCycle(min(abs(controlB), 100))
-
-        print('encA = %d, degA = %5.1f, errA = %5.1f, ctrlA = %7.1f' %(encoderPosA, motorDegA, errorA, controlA))
-        print('encB = %d, degB = %5.1f, errB = %5.1f, ctrlB = %7.1f' %(encoderPosB, motorDegB, errorB, controlB))
+        print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
+        print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
+        print('%f, %f' %(de, dt))
     
-        if (motorDegA >= targetDegA) & (controlA <= 0):
-            IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.LOW) 
-            IO.output(BIN3, IO.LOW)
-            IO.output(BIN4, IO.LOW)
-
-            time.sleep(0.01)
-            p1.ChangeDutyCycle(0)
-            p2.ChangeDutyCycle(0)
-            print('stopA')
-
-        time_prev = time.time()
-        time.sleep(dt_sleep)
-       
-        if (motorDegB >= targetDegB) & (controlB <= 0):
-            IO.output(AIN1, IO.LOW)
-            IO.output(AIN2, IO.LOW) 
-            IO.output(BIN3, IO.LOW)
-            IO.output(BIN4, IO.LOW)
-
-            time.sleep(0.01)
-            p1.ChangeDutyCycle(0)
-            p2.ChangeDutyCycle(0)
-            print('stopB')
+        if abs(error) <= tolerance :
+            IO.output(AIN1, control >=0)
+            IO.output(AIN2, control <=0)
+            time.sleep(0.5)
+            p.ChangeDutyCycle(0)
+            break
 
         time_prev = time.time()
         time.sleep(dt_sleep)
 
-# Crtl + c 누르면 모터 작동 멈춤
+    # Crtl + c 누르면 모터 작동 멈춤
 except KeyboardInterrupt: 
     pass
 
-p1.stop()
-p2.stop() 
+p.stop() 
