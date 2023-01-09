@@ -53,7 +53,7 @@ kd = float(input("KD:"))   #0.3
 dt = 0.
 di = 0.
 dt_sleep = 0.01
-tolerance = 0.01
+tolerance = 0.1
 
 start_time = time.time()
 error_prev = 0.
