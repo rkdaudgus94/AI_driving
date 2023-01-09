@@ -1,4 +1,4 @@
-# 각도만큼 DC모터 조절 
+# 캡스톤에 쓰이는 DC모터 360도 회전 
 
 import RPi.GPIO as IO
 import time
@@ -47,8 +47,8 @@ ratio = 360./264./52.
 
 # PID 상수
 kp = float(input("KP:"))   #0.5
-kd = float(input("KD:"))   #0.4
-ki = float(input("KI:"))   #0.3
+ki = float(input("KI:"))   #0.4
+kd = float(input("KD:"))   #0.3
 
 dt = 0.
 di = 0.
