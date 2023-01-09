@@ -6,8 +6,8 @@ import time
 pwmPin = 14 # 모터드라이버 ENA
 AIN1 = 15 # IN 1
 AIN2 = 18 # IN 2
-encPinA = 2 # 보라색 (A)
-encPinB = 3 # 파랑색 (B)
+encPinA = 2 # 파랑색 (A)
+encPinB = 3 # 보라색 (B)
 
 IO.setmode(IO.BCM)
 IO.setwarnings(False)
