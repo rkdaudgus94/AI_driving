@@ -49,11 +49,11 @@ ratio = 360./264./52.
 kp = float(input("KP:"))   #0.5
 ki = float(input("KI:"))   #0.4
 kd = float(input("KD:"))   #0.3
-
+ 
 dt = 0.
 di = 0.
 dt_sleep = 0.01
-tolerance = 0.1
+tolerance = 0.01
 
 start_time = time.time()
 error_prev = 0.
