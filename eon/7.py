@@ -76,7 +76,7 @@ try:
         # control += delta_v
         # error_prev = error
         # error_prev_prev = error_prev
-        
+        if abs(error) 
         IO.output(AIN1, control >= 0)
         IO.output(AIN2, control <= 0)
         time.sleep(0.5)
