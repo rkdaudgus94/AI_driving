@@ -76,22 +76,22 @@ try:
         # control += delta_v
         # error_prev = error
         # error_prev_prev = error_prev
-        if abs(error) 
-        IO.output(AIN1, control >= 0)
-        IO.output(AIN2, control <= 0)
-        time.sleep(0.5)
-        p.ChangeDutyCycle(min(abs(control), 100))
+        
+        if abs(error) >= tolerance : 
+            IO.output(AIN1, control >= 0)
+            IO.output(AIN2, control <= 0)
+            time.sleep(0.5)
+            p.ChangeDutyCycle(min(abs(control), 100))
+        elif abs(error) <= tolerance : 
+            IO.output(AIN1, control >= 0)
+            IO.output(AIN2, control <= 0)
+            time.sleep(0.5)
+            p.changeDutyCycle(0)
+            break
 
         print('P-term = %7.1f, D-term = %7.1f, I-term = %7.1f' %(kp*error, kd*de/dt, ki*de*dt))
         print('time = %6.3f, enc = %d, deg = %5.1f, err = %5.1f, ctrl = %7.1f' %(time.time()-start_time, encoderPos, motorDeg, error, control))
         print('%f, %f' %(de, dt))
-    
-        if abs(error) <= tolerance :
-            IO.output(AIN1, control >=0)
-            IO.output(AIN2, control <=0)
-            time.sleep(0.5)
-            p.ChangeDutyCycle(0)
-            break
 
         time_prev = time.time()
         time.sleep(dt_sleep)
