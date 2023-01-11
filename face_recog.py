@@ -39,6 +39,14 @@ def plot_faces(images, figsize=(10.8/2, 19.2/2)):
     ax.grid(False)
     fig.tight_layout()
 
+def timer(detector, detect_fn, images, *args):
+    start = time.time()
+    faces = detect_fn(detector, images, *args)
+    elapsed = time.time() - start
+    print(f', {elapsed:.3f} seconds')
+    return faces, elapsed
+
+
 device = 'cuda:1' if torch.cuda.is_available() else 'cpu'
 
 from facenet_pytorch import MTCNN
