@@ -12,7 +12,7 @@
 #define AIn2 18 // IN2
 #define pwmPinR  14
 
-const float ratio = 360. / 90. / 52.;
+const float ratio = 360. / 264. / 52.;
 
 float encoderPosRight = 0;
 float motorDeg = 0;
@@ -76,8 +76,8 @@ void loop() {
 }
 
 void setha_serial() {
-  if (Serial.available() > 0) {
-    setha = Serial.parseFloat();
+  printf("각도를 입력하시오 : ");
+  scanf("%d", &setha);
   }
   if (setha < 0) {
     in1 = HIGH, in2 = LOW;
@@ -127,4 +127,3 @@ void setha_serial() {
     motorDeg = 0;
     error = 0;
   }
-}
